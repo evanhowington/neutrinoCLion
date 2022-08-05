@@ -19,7 +19,7 @@
  Currently, there are a lot of print statements that send results to the console/terminal/debug
  screen so that one may see what the code is producing and the number of iterations is set to 1.
  When this code is ran to search the numerical spaces the print statements will be commented out
- and the number of datasets to be created will be increased signficantly.  The number of data sets
+ and the number of datasets to be created will be increased significantly.  The number of data sets
  desired can be changed by changing the value of "int setsOfData = 1;" on Line 77.
 
 
@@ -143,7 +143,7 @@ double findYukawaMatrices(double deltaQ, double deltaL, double tol)
     std::default_random_engine generator3(r());
     std::uniform_real_distribution<double> realDistribution3(0.0, 100.0);
 /*
-#################### Begin Loop searching for valid paramters ########################################
+#################### Begin Loop searching for valid parameters ########################################
 */
     while (a < setsOfData)
     {
@@ -218,7 +218,7 @@ double findYukawaMatrices(double deltaQ, double deltaL, double tol)
         /*
          * Calling the Eigenvalue, Eigenvector solver found from Spectra mentioned at the beginning of this .cpp file
          * I denoted this one as "es1()" so I can call these same eigenvalues without have to clear them from memory.
-         * When I want to find new eigenvalues i'll do so with "esN()", where N>1
+         * When I want to find new eigenvalues I'll do so with "esN()", where N>1
          */
 
         Eigen::EigenSolver<MatrixXd> es1(MatrixYukawaUpQuark);
@@ -298,7 +298,7 @@ double findYukawaMatrices(double deltaQ, double deltaL, double tol)
         // assigning the transpose of the Yukawa Neutrino matrix to use in finding the Majorana Mass matrix
         NeutrinoYukawaTranspose = MatrixYukawaNeutrino.transpose();
 
-        // Calculuating the Majorana Neutrino Mass Matrix with the Yukawa Neutrino matrices multiplied by the mass of the top quark of 173.4 GeV converted to eV
+        // Calculating the Majorana Neutrino Mass Matrix with the Yukawa Neutrino matrices multiplied by the mass of the top quark of 173.4 GeV converted to eV
         MajoranaMassNeutrino = (-1) * std::pow(146, 9) * MatrixYukawaNeutrino * DegeneratePower * std::pow(146, 9) * NeutrinoYukawaTranspose;
 
         // Printing values of the Majorana Neutrino Mass Matrice Calculations
@@ -323,26 +323,49 @@ double findYukawaMatrices(double deltaQ, double deltaL, double tol)
         // Printing the Majorana Eigenvalues, aka Neutrino masses
         std::cout << "\nThe eigenvalues of the Majorana Matrix are: " << std::endl << es5.eigenvalues() << std::endl;
 
-        if (ckmL(0,0) > CKMabsolute(0,0) || ckmL(0,1) > CKMabsolute(0,1) || ckmL(0,2) > CKMabsolute(0,2) || ckmL(1,0) > CKMabsolute(1,0) || ckmL(1,1) > CKMabsolute(1,1) || ckmL(1,2) > CKMabsolute(1,2) || ckmL(2,0) > CKMabsolute(2,0) || ckmL(2,1) > CKMabsolute(2,1) || ckmL(2,2) > CKMabsolute(2,2))
+        if (ckmL(0,0) > CKMabsolute(0,0) || ckmL(0,1) > CKMabsolute(0,1) ||
+            ckmL(0,2) > CKMabsolute(0,2) || ckmL(1,0) > CKMabsolute(1,0) ||
+            ckmL(1,1) > CKMabsolute(1,1) || ckmL(1,2) > CKMabsolute(1,2) ||
+            ckmL(2,0) > CKMabsolute(2,0) || ckmL(2,1) > CKMabsolute(2,1) ||
+            ckmL(2,2) > CKMabsolute(2,2))
         {
             ++small;
             std::cout << small << " are too small\n";
             std::cout << large << " are too large\n";
             std::cout << good << " are good\n";
             csv.open("data.csv", std::ios::app);
-            csv << a << "," << kappa << ", small, "<< vu1 << ","  << vu2 << ","  << vu3 << ","  << vu4 << ","  << vu5 << ","  << vu6 << ","  << vd1 << ","  << vd2 << ","  << vd3 << ","  << vd4 << ","  << vd5 << ","  << vd6 << ","  << CKMabsolute(0,0) << "," << CKMabsolute(0,1) << "," << CKMabsolute(0,2) << "," << CKMabsolute(1,0) << "," << CKMabsolute(1,1) << "," << CKMabsolute(1,2) << "," << CKMabsolute(2,0) << "," << CKMabsolute(2,1) << "," << CKMabsolute(2,2) << "," << MajoranaVal(0,0) << "," << MajoranaVal(1,0) << "," << MajoranaVal(2,0) << "," << PMNSabs(0,0) << "," << PMNSabs(0,1) << "," << PMNSabs(0,2) << "," << PMNSabs(1,0) << "," << PMNSabs(1,1) << "," << PMNSabs(1,2) << "," << PMNSabs(2,0) << "," << PMNSabs(2,1) << "," << PMNSabs(2,2) << std::endl;
+            csv << a << "," << kappa << ", small, "<< vu1 << ","  << vu2 << ","  << vu3 << ","  << vu4 << ","  << vu5
+                << ","  << vu6 << ","  << vd1 << ","  << vd2 << ","  << vd3 << ","  << vd4 << ","  << vd5 << ","  << vd6
+                << ","  << CKMabsolute(0,0) << "," << CKMabsolute(0,1) << "," << CKMabsolute(0,2)
+                << "," << CKMabsolute(1,0) << "," << CKMabsolute(1,1) << "," << CKMabsolute(1,2)
+                << "," << CKMabsolute(2,0) << "," << CKMabsolute(2,1) << "," << CKMabsolute(2,2)
+                << "," << MajoranaVal(0,0) << "," << MajoranaVal(1,0) << "," << MajoranaVal(2,0)
+                << "," << PMNSabs(0,0) << "," << PMNSabs(0,1) << "," << PMNSabs(0,2) << ","
+                << PMNSabs(1,0) << "," << PMNSabs(1,1) << "," << PMNSabs(1,2) << ","
+                << PMNSabs(2,0) << "," << PMNSabs(2,1) << "," << PMNSabs(2,2) << std::endl;
 
         }
 
-        else if (CKMabsolute(0,0) > ckmU(0,0) || CKMabsolute(0,1) > ckmU(0,1) || CKMabsolute(0,2) > ckmU(0,2) || CKMabsolute(1,0) > ckmU(1,0) || CKMabsolute(1,1) > ckmU(1,1) || CKMabsolute(1,2) > ckmU(1,2) || CKMabsolute(2,0) > ckmU(2,0) || CKMabsolute(2,1) > ckmU(2,1) || CKMabsolute(2,2) > ckmU(2,2))
+        else if (CKMabsolute(0,0) > ckmU(0,0) || CKMabsolute(0,1) > ckmU(0,1) ||
+                CKMabsolute(0,2) > ckmU(0,2) || CKMabsolute(1,0) > ckmU(1,0) ||
+                CKMabsolute(1,1) > ckmU(1,1) || CKMabsolute(1,2) > ckmU(1,2) ||
+                CKMabsolute(2,0) > ckmU(2,0) || CKMabsolute(2,1) > ckmU(2,1) ||
+            CKMabsolute(2,2) > ckmU(2,2))
         {
             ++large;
             std::cout << small << " are too small\n";
             std::cout << large << " are too large\n";
             std::cout << good << " are good\n";
             csv.open("data.csv", std::ios::app);
-            csv << a << "," << kappa << ", small, "<< vu1 << ","  << vu2 << ","  << vu3 << ","  << vu4 << ","  << vu5 << ","  << vu6 << ","  << vd1 << ","  << vd2 << ","  << vd3 << ","  << vd4 << ","  << vd5 << ","  << vd6 << ","  << CKMabsolute(0,0) << "," << CKMabsolute(0,1) << "," << CKMabsolute(0,2) << "," << CKMabsolute(1,0) << "," << CKMabsolute(1,1) << "," << CKMabsolute(1,2) << "," << CKMabsolute(2,0) << "," << CKMabsolute(2,1) << "," << CKMabsolute(2,2) << "," << MajoranaVal(0,0) << "," << MajoranaVal(1,0) << "," << MajoranaVal(2,0) << "," << PMNSabs(0,0) << "," << PMNSabs(0,1) << "," << PMNSabs(0,2) << "," << PMNSabs(1,0) << "," << PMNSabs(1,1) << "," << PMNSabs(1,2) << "," << PMNSabs(2,0) << "," << PMNSabs(2,1) << "," << PMNSabs(2,2) << std::endl;
-
+            csv << a << "," << kappa << ", small, "<< vu1 << ","  << vu2 << ","  << vu3 << ","  << vu4 << ","  << vu5
+                << ","  << vu6 << ","  << vd1 << ","  << vd2 << ","  << vd3 << ","  << vd4 << ","  << vd5 << ","  << vd6
+                << ","  << CKMabsolute(0,0) << "," << CKMabsolute(0,1) << "," << CKMabsolute(0,2)
+                << "," << CKMabsolute(1,0) << "," << CKMabsolute(1,1) << "," << CKMabsolute(1,2)
+                << "," << CKMabsolute(2,0) << "," << CKMabsolute(2,1) << "," << CKMabsolute(2,2)
+                << "," << MajoranaVal(0,0) << "," << MajoranaVal(1,0) << "," << MajoranaVal(2,0)
+                << "," << PMNSabs(0,0) << "," << PMNSabs(0,1) << "," << PMNSabs(0,2) << ","
+                << PMNSabs(1,0) << "," << PMNSabs(1,1) << "," << PMNSabs(1,2) << ","
+                << PMNSabs(2,0) << "," << PMNSabs(2,1) << "," << PMNSabs(2,2) << std::endl;
         }
 
         else
@@ -352,8 +375,15 @@ double findYukawaMatrices(double deltaQ, double deltaL, double tol)
             std::cout << large << " are too large\n";
             std::cout << good << " are good\n";
             csv.open("data.csv", std::ios::app);
-            csv << a << "," << kappa << ", small, "<< vu1 << ","  << vu2 << ","  << vu3 << ","  << vu4 << ","  << vu5 << ","  << vu6 << ","  << vd1 << ","  << vd2 << ","  << vd3 << ","  << vd4 << ","  << vd5 << ","  << vd6 << ","  << CKMabsolute(0,0) << "," << CKMabsolute(0,1) << "," << CKMabsolute(0,2) << "," << CKMabsolute(1,0) << "," << CKMabsolute(1,1) << "," << CKMabsolute(1,2) << "," << CKMabsolute(2,0) << "," << CKMabsolute(2,1) << "," << CKMabsolute(2,2) << "," << MajoranaVal(0,0) << "," << MajoranaVal(1,0) << "," << MajoranaVal(2,0) << "," << PMNSabs(0,0) << "," << PMNSabs(0,1) << "," << PMNSabs(0,2) << "," << PMNSabs(1,0) << "," << PMNSabs(1,1) << "," << PMNSabs(1,2) << "," << PMNSabs(2,0) << "," << PMNSabs(2,1) << "," << PMNSabs(2,2) << std::endl;
-
+            csv << a << "," << kappa << ", small, "<< vu1 << ","  << vu2 << ","  << vu3 << ","  << vu4 << ","  << vu5
+                << ","  << vu6 << ","  << vd1 << ","  << vd2 << ","  << vd3 << ","  << vd4 << ","  << vd5 << ","  << vd6
+                << ","  << CKMabsolute(0,0) << "," << CKMabsolute(0,1) << "," << CKMabsolute(0,2)
+                << "," << CKMabsolute(1,0) << "," << CKMabsolute(1,1) << "," << CKMabsolute(1,2)
+                << "," << CKMabsolute(2,0) << "," << CKMabsolute(2,1) << "," << CKMabsolute(2,2)
+                << "," << MajoranaVal(0,0) << "," << MajoranaVal(1,0) << "," << MajoranaVal(2,0)
+                << "," << PMNSabs(0,0) << "," << PMNSabs(0,1) << "," << PMNSabs(0,2) << ","
+                << PMNSabs(1,0) << "," << PMNSabs(1,1) << "," << PMNSabs(1,2) << ","
+                << PMNSabs(2,0) << "," << PMNSabs(2,1) << "," << PMNSabs(2,2) << std::endl;
         }
 
         // Keeping track of how many loops, displayed when the program is executed
@@ -362,12 +392,14 @@ double findYukawaMatrices(double deltaQ, double deltaL, double tol)
         csv.close();
 
     }
-    // 5 in the below printout represents the number of threads used.  NEED: setup a function to make the number of threads a max of the hardware
+    // 5 in the below printout represents the number of threads used.  NEED: set up a function to make the number of threads a max of the hardware
     std::cout<< "\nYou have created: " << 36 * setsOfData * 32 << " data points\n\n";
     return 0;
 }
 
-
+/*
+ * threading() below this comment needs to be live if using threading() inside int main()
+ * */
 double threading(double delta, double kappa, double tol)
 {
     std::thread t1(findYukawaMatrices, delta, kappa, tol);
@@ -445,7 +477,10 @@ int main()
 
     std::ofstream csv;
     csv.open("data.csv", std::ios::app);
-    csv << "loopRun, kappa, LargeGoodSmall, vu1, vu2, vu3, vu4, vu5, vu6, vd1, vd2, vd3, vd4, vd5, vd6, CKMabsolute(11), CKMabsolute(12), CKMabsolute(13), CKMabsolute(21), CKMabsolute(22), CKMabsolute(23), CKMabsolute(31), CKMabsolute(32), CKMabsolute(33), MajoranaEigenVal 1, MajoranaEigenVal 2, MajoranaEigenVal 3, PMNS(11), PMNS(12), PMNS(13), PMNS(21), PMNS(22), PMNS(23), PMNS(31), PMNS(32), PMNS(33)" << std::endl;
+    csv << "loopRun, kappa, LargeGoodSmall, vu1, vu2, vu3, vu4, vu5, vu6, vd1, vd2, vd3, vd4, vd5, vd6, CKMabsolute(11), "
+           "CKMabsolute(12), CKMabsolute(13), CKMabsolute(21), CKMabsolute(22), CKMabsolute(23), CKMabsolute(31), CKMabsolute(32), "
+           "CKMabsolute(33), MajoranaEigenVal 1, MajoranaEigenVal 2, MajoranaEigenVal 3, PMNS(11), PMNS(12), PMNS(13), "
+           "PMNS(21), PMNS(22), PMNS(23), PMNS(31), PMNS(32), PMNS(33)" << std::endl;
     csv.close();
 
     threading(0.0, 0.5, 0.0000001); // Creates 32 threads
