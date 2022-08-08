@@ -67,6 +67,8 @@ double expsum(double delta, double kappa, double Tol)
 double findYukawaMatrices(double deltaQ, double deltaL, double tol)
 {
 
+    std::cout << "\nPlease standby while your results are being calculated." << std::endl;
+
     // Creating the csv file to write data to
     std::ofstream csv;
     csv.open("data.csv", std::ios::app);
@@ -169,8 +171,8 @@ double findYukawaMatrices(double deltaQ, double deltaL, double tol)
 
             // "a" is a loop counter
             ++a;
-#pragma omp critical
-            std::cout << "\n; " << a << " loops completed\n";
+//#pragma omp critical
+//            std::cout << "\n; " << a << " loops completed\n";
 
 
             // Give random values to Higgs VEVs up, published paper values in scratch.cpp
@@ -229,10 +231,12 @@ double findYukawaMatrices(double deltaQ, double deltaL, double tol)
             MatrixYukawaDownQuark(2, 2) = Aq * vd3 + Eq * vd6;
 
             // Printing values of the Yukawa Up Quark Calculations
-//        std::cout << "\nYukawa Up Quark Matrice\n" << MatrixYukawaUpQuark << std::endl;
+//#pragma omp critical
+//            std::cout << "\nYukawa Up Quark Matrice\n" << MatrixYukawaUpQuark << std::endl;
 
             // Printing values of the Yukawa Down Quark Calculations
-//        std::cout << "\nYukawa Down Quark Matrice\n" << MatrixYukawaDownQuark << std::endl;
+//#pragma omp critical
+//            std::cout << "\nYukawa Down Quark Matrice\n" << MatrixYukawaDownQuark << std::endl;
 
             /*
              * Calling the Eigenvalue, Eigenvector solver found from Spectra mentioned at the beginning of this .cpp file
@@ -244,21 +248,25 @@ double findYukawaMatrices(double deltaQ, double deltaL, double tol)
             UpQVect = es1.eigenvectors().real(); // THE ERROR COMES FROM HERE, AND IF THIS IS COMMENTED OUT THE CODE WORKS FINE IN GENERATING THE EIGENVECTORS & VALUES IN THE PRINT STATEMENTS
 
             // Printing the Up Quark Matrice values for the Eigenvectors, and Eigenvalues to the screen
-//        std::cout << "\nThe eigenvalues of the Yukawa Up Quark Matrix are: " << std::endl << es1.eigenvalues() << std::endl;
-//        std::cout << "\nThe Up Quark eigenvectors are:" << std::endl << UpQVect << std::endl;
+//#pragma omp critical
+//            std::cout << "\nThe eigenvalues of the Yukawa Up Quark Matrix are: " << std::endl << es1.eigenvalues() << std::endl;
+//#pragma omp critical
+//            std::cout << "\nThe Up Quark eigenvectors are:" << std::endl << UpQVect << std::endl;
 
             Eigen::EigenSolver<MatrixXd> es2(MatrixYukawaDownQuark);
             DownQVect = es2.eigenvectors().real(); // THIS WILL ALSO PRODUCE AN ERROR AS IT IS THE SAME PROBLEM FROM ABOVE
 
             // Printing the Up Quark Matrice values for the Eigenvectors, and Eigenvalues to the screen
-//        std::cout << "\nThe eigenvalues of the Yukawa Down Quark Matrix are: " << std::endl << es2.eigenvalues() << std::endl;
-//        std::cout << "\nThe Down Quark eigenvectors, V, is:" << std::endl << DownQVect << std::endl;
+//#pragma omp critical
+//            std::cout << "\nThe eigenvalues of the Yukawa Down Quark Matrix are: " << std::endl << es2.eigenvalues() << std::endl;
+//#pragma omp critical
+//            std::cout << "\nThe Down Quark eigenvectors, V, is:" << std::endl << DownQVect << std::endl;
 
             UpQVectTranspose = UpQVect.transpose();
             CKM = DownQVect * UpQVectTranspose;
             CKMabsolute = CKM.cwiseAbs();
-#pragma omp critical
-            std::cout << "\nThe absolute value of the CKM Matrix is: " << std::endl << CKMabsolute << std::endl;
+//#pragma omp critical
+//            std::cout << "\nThe absolute value of the CKM Matrix is: " << std::endl << CKMabsolute << std::endl;
 
 
             /*
@@ -297,18 +305,22 @@ double findYukawaMatrices(double deltaQ, double deltaL, double tol)
             MatrixYukawaChargedLepton(2, 2) = Aq * vd3 + Eq * vd6;
 
             // Printing values of the Yukawa Neutrino Calculations
-//        std::cout << "\nYukawa Neutrino Matrice\n" << MatrixYukawaNeutrino << std::endl;
+//#pragma omp critical
+//            std::cout << "\nYukawa Neutrino Matrice\n" << MatrixYukawaNeutrino << std::endl;
 
             // Printing values of the Yukawa Charged Leptons Calculations
-//        std::cout << "\nYukawa Charged Lepton Matrice\n" << MatrixYukawaChargedLepton << std::endl;
+//#pragma omp critical
+//            std::cout << "\nYukawa Charged Lepton Matrice\n" << MatrixYukawaChargedLepton << std::endl;
 
             // Eigenvalues and Eigenvectors for the Yukawa Neutrino Matrice
             Eigen::EigenSolver<MatrixXd> es3(MatrixYukawaNeutrino);
-//        NeutrinoVect = es3.eigenvectors().real();
+            NeutrinoVect = es3.eigenvectors().real();
 
             // Printing the Neutrino values for the Eigenvectors, and Eigenvalues to the screen
-//        std::cout << "\nThe eigenvalues of the Yukawa Neutrino Matrix are: " << std::endl << es3.eigenvalues() << std::endl;
-//        std::cout << "\nThe Yukawa Neutrino eigenvectors are:" << std::endl << NeutrinoVect << std::endl;
+//#pragma omp critical
+//            std::cout << "\nThe eigenvalues of the Yukawa Neutrino Matrix are: " << std::endl << es3.eigenvalues() << std::endl;
+//#pragma omp critical
+//            std::cout << "\nThe Yukawa Neutrino eigenvectors are:" << std::endl << NeutrinoVect << std::endl;
 
             // Eigenvalues and Eigenvectors for the Yukawa Charged Lepton Matrice
             Eigen::EigenSolver<MatrixXd> es4(MatrixYukawaChargedLepton);
@@ -316,8 +328,10 @@ double findYukawaMatrices(double deltaQ, double deltaL, double tol)
             ChargedLeptVectTranspose = LeptVect.transpose();
 
             // Printing the Up Quark Matrice values for the Eigenvectors, and Eigenvalues to the screen
-//        std::cout << "\nThe eigenvalues of the Yukawa Charged Leptons Matrix are: " << std::endl << es4.eigenvalues() << std::endl;
-//        std::cout << "\nThe Yukawa Charged Leptons eigenvectors, V, is:" << std::endl << LeptVect << std::endl;
+//#pragma omp critical
+//            std::cout << "\nThe eigenvalues of the Yukawa Charged Leptons Matrix are: " << std::endl << es4.eigenvalues() << std::endl;
+//#pragma omp critical
+//            std::cout << "\nThe Yukawa Charged Leptons eigenvectors, V, is:" << std::endl << LeptVect << std::endl;
 
             // Setting Degenerate Values for the Elements
             Degenerate(0, 0) = 0.9990;
@@ -340,7 +354,8 @@ double findYukawaMatrices(double deltaQ, double deltaL, double tol)
             MajoranaMassNeutrino = (-1) * std::pow(146, 9) * MatrixYukawaNeutrino * DegeneratePower * std::pow(146, 9) * NeutrinoYukawaTranspose;
 
             // Printing values of the Majorana Neutrino Mass Matrice Calculations
-//        std::cout << "\nMajorana Neutrino Matrice\n" << MajoranaMassNeutrino << std::endl;
+//#pragma omp critical
+//            std::cout << "\nMajorana Neutrino Matrice\n" << MajoranaMassNeutrino << std::endl;
 
             // Eigenvalues and Eigenvectors for the Majorana Neutrino Matrice
             Eigen::EigenSolver<MatrixXd> es5(MajoranaMassNeutrino);
@@ -348,21 +363,21 @@ double findYukawaMatrices(double deltaQ, double deltaL, double tol)
             MajoranaVal = es5.eigenvalues().real();
 
             // Printing values of the Majorana Neutrino Mass Matrice Calculations
-//        std::cout << "\nMajorana Eigenvector Matrice\n" << MajoranaVect << std::endl;
+//#pragma omp critical
+//            std::cout << "\nMajorana Eigenvector Matrice\n" << MajoranaVect << std::endl;
 
             // Computing the PMNS Neutrino Mixing Matrice
             PMNS = ChargedLeptVectTranspose * MajoranaVect;
             PMNSabs = PMNS.cwiseAbs();
 
             // Printing values of the Majorana Neutrino Mass Matrice Calculations
-#pragma omp critical
-            std::cout << "\nAbsolute value of the PMNS Neutrino Mixing Matrice\n" << PMNSabs << std::endl;
+//#pragma omp critical
+//            std::cout << "\nAbsolute value of the PMNS Neutrino Mixing Matrice\n" << PMNSabs << std::endl;
 
 
             // Printing the Majorana Eigenvalues, aka Neutrino masses
-#pragma omp critical
-            std::cout << "\nThe eigenvalues of the Majorana Matrix are: " << std::endl << es5.eigenvalues()
-                      << std::endl;
+//#pragma omp critical
+//            std::cout << "\nThe eigenvalues of the Majorana Matrix are: " << std::endl << es5.eigenvalues() << std::endl;
 
 #pragma omp critical
             csv << a << "," << kappa << ", small, " << vu1 << "," << vu2 << "," << vu3 << "," << vu4 << "," << vu5
@@ -389,7 +404,9 @@ int main()
 
     auto end = std::chrono::steady_clock::now();
 
-    std::cout << "Elapsed time in seconds : " << std::chrono::duration_cast < std::chrono::seconds>(end - start).count()<< " sec\n\n";
+    std::cout << "\nYour results have been calculated and are stored in a csv file labeld 'data'.\n" << std::endl;
+
+    std::cout << "Elapsed time in seconds : " << std::chrono::duration_cast < std::chrono::seconds>(end - start).count()<< " sec\n" << std::endl;
 
     return 0;
 
